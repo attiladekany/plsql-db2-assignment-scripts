@@ -1,0 +1,42 @@
+--------------------------------------------------------
+--  DDL for Table PETROL_STATION_HISTORIES
+--------------------------------------------------------
+--DROP TABLE "PETROL_STATION_HISTORIES"
+CREATE TABLE "PETROL_STATION_HISTORIES"
+(
+	"PETROL_STATION_HISTORY_ID" NUMBER NOT NULL,
+    "DML_TYPE" VARCHAR2(10),
+    "ACTIVE_USER_ID" VARCHAR2(20), -- type ???
+    "PETROL_STATION_ID" NUMBER NOT NULL,
+    "SYSTEM_DATE" DATE,
+    "INFORMATION" VARCHAR2(100)
+);
+
+--------------------------------------------------------
+--  ADD CONSTRAINT TO PETROL_STATION_HISTORIES
+--------------------------------------------------------
+ALTER TABLE "PETROL_STATION_HISTORIES" ADD CONSTRAINT "PETROL_STATION_HISTORY_ID_PK" PRIMARY KEY ("PETROL_STATION_HISTORY_ID");
+
+ALTER TABLE "PETROL_STATION_HISTORIES" ADD CONSTRAINT "PSHIST_PET_FK" FOREIGN KEY ("PETROL_STATION_ID")
+    REFERENCES "PETROL_STATIONS" ("PETROL_STATION_ID") ENABLE;
+    
+--------------------------------------------------------
+--  CREATE SEQUENCE FOR AUTO INCREMENT
+--------------------------------------------------------
+
+CREATE SEQUENCE PETROL_STATION_HISTORIES_SEQUENCE
+ START WITH     1
+ INCREMENT BY   1
+ NOCACHE
+ NOCYCLE;
+ 
+--------------------------------------------------------
+--  CREATE TRIGGER FOR PETROL_STATION_HISTORIES
+--------------------------------------------------------
+CREATE TRIGGER PETROL_STATION_HISTORIES_BI
+BEFORE INSERT ON PETROL_STATION_HISTORIES
+FOR EACH ROW
+BEGIN
+    SELECT PETROL_STATION_HISTORIES_SEQUENCE.nextval INTO :new.PETROL_STATION_HISTORY_ID FROM dual;
+END;
+/

@@ -1,0 +1,65 @@
+--------------------------------------------------------
+--  DDL for Table EMPLOYEES
+--------------------------------------------------------
+--DROP TABLE "EMPLOYEES";
+CREATE TABLE "EMPLOYEES"
+(
+    "EMPLOYEE_ID" NUMBER NOT NULL,
+    "PETROL_STATION_ID" NUMBER NOT NULL,
+    "FULLNAME" VARCHAR2(100) NOT NULL,
+    "AGE" NUMBER DEFAULT NULL,
+    "JOB_TITLE" VARCHAR2(100) DEFAULT NULL,
+    "IS_TEAMLEADER" NUMBER(1,0) DEFAULT 0
+);
+
+--------------------------------------------------------
+--  ADD CONSTRAINT TO EMPLOYEES
+--------------------------------------------------------
+ALTER TABLE "EMPLOYEES" ADD CONSTRAINT "EMPLOYEE_ID_PK" PRIMARY KEY ("EMPLOYEE_ID");
+
+ALTER TABLE "EMPLOYEES" ADD CONSTRAINT "EMP_PET_FK" FOREIGN KEY ("PETROL_STATION_ID")
+    REFERENCES "PETROL_STATIONS" ("PETROL_STATION_ID") ENABLE;
+--------------------------------------------------------
+--  CREATE SEQUENCE FOR AUTO INCREMENT
+--------------------------------------------------------
+CREATE SEQUENCE EMPLOYEES_SEQUENCE
+ START WITH     1
+ INCREMENT BY   1
+ NOCACHE
+ NOCYCLE;
+--------------------------------------------------------
+--  CREATE TRIGGER FOR EMPLOYEES_SEQUENCE
+--------------------------------------------------------
+CREATE TRIGGER EMPLOYEES_AUTO_INCREMENT_BI
+BEFORE INSERT ON EMPLOYEES
+FOR EACH ROW
+BEGIN
+    SELECT EMPLOYEES_SEQUENCE.nextval INTO :new.EMPLOYEE_ID FROM dual;
+END;
+/
+--------------------------------------------------------
+--  POPULATE EMPLOYEES
+--------------------------------------------------------
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('1', 'Kiss Krisztián', '30', 'assistant', '0');
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('1', 'Lukács István', '25', 'gas station attendant', '0');
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('1', 'Gulyás János', '27', 'leader', '1');
+
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('2', 'Király Zoltán', '23', 'assistant', '0');
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('2', 'Katona Sándor', '29', 'gas station attendant', '0');
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('2', 'Jakab Gábor', '35', 'leader', '1');
+
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('3', 'Bogdán Ferenc', '45', 'assistant', '0');
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('3', 'Balog Attila', '26', 'gas station attendant', '0');
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('3', 'Boros Péter', '29', 'leader', '1');
+
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('4', 'Fazekas Tamás', '18', 'assistant', '0');
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('4', 'Kelemen Zsolt', '27', 'gas station attendant', '0');
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('4', 'Váradi Tibor', '29', 'leader', '1');
+
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('5', 'Antal András', '25', 'assistant', '0');
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('5', 'Somogyi Csaba', '21', 'gas station attendant', '0');
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('5', 'Orosz Imre', '22', 'leader', '1');
+
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('6', 'Fülöp Lajos', '20', 'assistant', '0');
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('6', 'Veres 	György', '52', 'gas station attendant', '0');
+INSERT INTO EMPLOYEES (PETROL_STATION_ID, FULLNAME, AGE, JOB_TITLE, IS_TEAMLEADER) VALUES ('6', 'Vincze Balázs', '46', 'leader', '1');
