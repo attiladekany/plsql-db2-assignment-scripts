@@ -33,8 +33,8 @@ BEGIN
     FROM petrol_stations ps
     INNER JOIN employees emp ON ps.petrol_station_id = emp.petrol_station_id
     WHERE emp.is_teamleader = 1 AND 
-          emp.fullname = oldfullname AND 
-          ps.ps_name = oldpetrolstationname AND
+          emp.fullname = oldFullName AND 
+          ps.ps_name = oldPetrolStationName AND
           ROWNUM = 1;
     
     IF(oldFullName <> p_fullName)

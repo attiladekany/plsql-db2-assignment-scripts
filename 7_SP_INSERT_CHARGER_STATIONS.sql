@@ -8,10 +8,11 @@ CREATE OR REPLACE PROCEDURE SP_INSERT_CHARGER_STATION(
     NUMBER_OF_CHARGERS out number
 ) AS
 
-rowCountWithSameData number;
-nOfPetrolStation NUMBER;
-Invalid_Data EXCEPTION;
-Invalid_Foreign_Key EXCEPTION;
+rowCountWithSameData    NUMBER;
+nOfPetrolStation        NUMBER;
+
+Invalid_Data            EXCEPTION;
+Invalid_Foreign_Key     EXCEPTION;
 
 BEGIN
     SELECT COUNT(*)
@@ -45,8 +46,8 @@ BEGIN
  
 EXCEPTION
 WHEN Invalid_Data
-    THEN dbms_output.put_line('Érvénytelen adatok: ilyen rekord már létezik.');
+    THEN dbms_output.put_line('ï¿½rvï¿½nytelen adatok: ilyen rekord mï¿½r lï¿½tezik.');
 WHEN Invalid_Foreign_Key
-    THEN dbms_output.put_line('Érvenytelen idegen kulcs!');
+    THEN dbms_output.put_line('ï¿½rvenytelen idegen kulcs!');
 END SP_INSERT_CHARGER_STATION;
 /

@@ -5,11 +5,11 @@ CREATE OR REPLACE PROCEDURE SP_GET_EMPLOYEES_BY_PS_NAME(
     P_PS_NAME petrol_stations.ps_name%TYPE
 ) AS
     
-    numberOfConnectedEmployee   NUMBER := 0;
-    petolStationId              NUMBER := 0;
+    numberOfConnectedEmployee       NUMBER := 0;
+    petolStationId                  NUMBER := 0;
     countPetrolstationWithGivenName NUMBER := 0;
-    Invalid_Petrol_Station_Name EXCEPTION;
-    
+
+    Invalid_Petrol_Station_Name     EXCEPTION;    
     No_Connected_Employee_To_This_Petrol_Station EXCEPTION;
 
 BEGIN
@@ -59,25 +59,26 @@ DECLARE
 BEGIN
     OPEN EMPLOYEE_CURSOR;
     FETCH EMPLOYEE_CURSOR INTO employeeStruct;
-    WHILE EMPLOYEE_CURSOR%FOUND LOOP
-        dbms_output.put_line('petrol_station_id: ' || RPAD(employeeStruct.employee_id, 5) ||
-                             'fullname: ' || RPAD(employeestruct.fullname, 20) ||
-                             'is_teamleader: ' || RPAD(employeestruct.is_teamleader, 5) ||
-                             'age: ' || RPAD(employeestruct.age, 5) ||
-                             'job_title: ' || RPAD(employeestruct.job_title, 30) ||
-                             'number_of_employees: ' || numberOfConnectedEmployee);
-    
-    FETCH EMPLOYEE_CURSOR INTO employeeStruct;
-    END LOOP;
+    WHILE EMPLOYEE_CURSOR%FOUND
+        LOOP
+            dbms_output.put_line('petrol_station_id: ' || RPAD(employeeStruct.employee_id, 5) ||
+                                'fullname: ' || RPAD(employeestruct.fullname, 20) ||
+                                'is_teamleader: ' || RPAD(employeestruct.is_teamleader, 5) ||
+                                'age: ' || RPAD(employeestruct.age, 5) ||
+                                'job_title: ' || RPAD(employeestruct.job_title, 30) ||
+                                'number_of_employees: ' || numberOfConnectedEmployee);
+        
+            FETCH EMPLOYEE_CURSOR INTO employeeStruct;
+        END LOOP;
     CLOSE EMPLOYEE_CURSOR;
 END;
 --============================== END CURSOR ==================================
 
 EXCEPTION
 WHEN Invalid_Petrol_Station_Name
-    THEN dbms_output.put_line('Érvénytelen paraméter: ezzel a petrol station name-el nem létezik tölt?állomás.');
+    THEN dbms_output.put_line('ï¿½rvï¿½nytelen paramï¿½ter: ezzel a petrol station name-el nem lï¿½tezik tï¿½lt?ï¿½llomï¿½s.');
 WHEN No_Connected_Employee_To_This_Petrol_Station
-    THEN dbms_output.put_line('Érvenytelen kulcs: ehhez a tölt?állomáshoz nincsenek dolgozók rendelve.!');
+    THEN dbms_output.put_line('ï¿½rvenytelen kulcs: ehhez a tï¿½lt?ï¿½llomï¿½shoz nincsenek dolgozï¿½k rendelve.!');
 WHEN NO_DATA_FOUND
     THEN RAISE Invalid_Petrol_Station_Name;
 END SP_GET_EMPLOYEES_BY_PS_NAME;

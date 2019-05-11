@@ -7,6 +7,7 @@ BEFORE INSERT OR DELETE OR UPDATE
 FOR EACH ROW
 DECLARE 
     PRAGMA AUTONOMOUS_TRANSACTION;
+    
     userId          petrol_station_histories.active_user_id%TYPE;
     info            petrol_station_histories.information%TYPE;
     dmlType         VARCHAR2(10) := '';
@@ -15,9 +16,9 @@ DECLARE
     newPSAddress    petrol_stations.ps_address%TYPE     := :new.ps_address;
     newPSIsNonStop  petrol_stations.ps_isnonstop%TYPE   := :new.ps_isnonstop;
     
-    oldPSName       petrol_stations.ps_name%TYPE        := :new.ps_name;
-    oldPSAddress    petrol_stations.ps_address%TYPE     := :new.ps_address;
-    oldPSIsNonStop  petrol_stations.ps_isnonstop%TYPE   := :new.ps_isnonstop;
+    oldPSName       petrol_stations.ps_name%TYPE        := :old.ps_name;
+    oldPSAddress    petrol_stations.ps_address%TYPE     := :old.ps_address;
+    oldPSIsNonStop  petrol_stations.ps_isnonstop%TYPE   := :old.ps_isnonstop;
 BEGIN
 
 SELECT user INTO userId FROM dual;
@@ -49,7 +50,7 @@ info :=     'ACTIVE_USER: '         || userid || '|' ||
                                     'OLD PS_ISNONSTOP: '|| oldPSIsNonStop;
     END CASE;
     
-    info := info || '|' || 'DML_TYPE: ' || dmltype;
+    info := info || '|' || 'DML_TYPE: ' || dmlType;
     
     INSERT INTO PETROL_STATION_HISTORIES 
         ("DML_TYPE",
